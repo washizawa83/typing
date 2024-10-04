@@ -15,9 +15,9 @@ export const HomePageComponent = () => {
                     <motion.div
                         initial={{ scale: 1, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 1 }}
+                        transition={{ duration: 2 }}
                     >
-                        <Image src={logoUrl} alt="My SVG" />
+                        <Image src={logoUrl} alt="title logo" />
                     </motion.div>
                 </div>
                 <div className="flex items-center justify-center">
