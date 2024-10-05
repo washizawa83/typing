@@ -21,7 +21,7 @@ export const HomePageComponent = () => {
                     </motion.div>
                 </div>
                 <div className="flex items-center justify-center">
-                    <HomeMenuButton label="start" />
+                    <HomeMenuButton label="training" />
                 </div>
             </BasePage>
         </div>
