@@ -1,9 +1,13 @@
+import type { BaseSkill } from '@/app/_service/skill'
+
 export class CommandManager {
     private entryKeys = ''
+    private acceptedCommands
     private filteredAcceptedCommands
 
-    constructor(private acceptedCommands: string[]) {
-        this.filteredAcceptedCommands = acceptedCommands
+    constructor(private skills: BaseSkill[]) {
+        this.acceptedCommands = this.skills.map((skill) => skill.name)
+        this.filteredAcceptedCommands = this.acceptedCommands
     }
 
     getEntryKeys() {
@@ -11,7 +15,8 @@ export class CommandManager {
     }
 
     setEntryKeys(key: string) {
-        this.entryKeys = this.entryKeys + key
+        if (key === ' ') key = '_'
+        this.entryKeys = (this.entryKeys + key).toLowerCase()
     }
 
     getFilteredAcceptedCommand() {

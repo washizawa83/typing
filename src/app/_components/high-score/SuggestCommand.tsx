@@ -10,9 +10,9 @@ export const SuggestCommand = ({
     entryKeys,
 }: Props) => {
     return (
-        <div className="">
+        <div>
             <h3 className="mb-3 border-b border-[#671f92] pb-1">Suggest</h3>
-            <ul className="flex max-h-20 max-w-7xl flex-wrap items-center overflow-y-auto overflow-x-hidden">
+            <ul className="flex max-h-20 min-h-20 max-w-7xl flex-wrap overflow-y-auto overflow-x-hidden">
                 {filteredAcceptedCommands.map((command) => (
                     <SuggestCommandItem
                         key={command}
