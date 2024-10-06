@@ -19,15 +19,15 @@ const mockSkillSets: BaseSkill[] = [
     new LimitOfHeat(),
 ]
 
-const mockCommands = ['heat', 'over heat', 'limit of heat']
-
 export const HighScorePageComponent = ({ mode }: Props) => {
+    const [completedCommand, setCompletedCommand] = useState<string | null>(
+        null,
+    )
     const [entryKeys, setEntryKeys] = useState('')
     const [filteredAcceptedCommands, setFilteredAcceptedCommands] = useState<
         string[]
     >(mockSkillSets.map((skill) => skill.name))
     const router = useRouter()
-
     const commandManager = new CommandManager(mockSkillSets)
 
     useEffect(() => {
@@ -35,10 +35,13 @@ export const HighScorePageComponent = ({ mode }: Props) => {
             if (event.shiftKey && event.location === 1) return
             if (event.key === 'Escape') return router.push('/pages/home/')
 
-            commandManager.setEntryKeys(event.key)
+            commandManager.addEntryKeys(event.key)
             setFilteredAcceptedCommands(commandManager.searchAcceptedCommands())
             setEntryKeys(commandManager.getEntryKeys())
-            commandManager.getCompletedCommand()
+
+            if (commandManager.getCompletedCommand()) {
+                setCompletedCommand(commandManager.getCompletedCommand())
+            }
         }
 
         window.addEventListener('keydown', handleKeyDown)
@@ -48,6 +51,16 @@ export const HighScorePageComponent = ({ mode }: Props) => {
         }
     }, [])
 
+    const handleResetSuggest = () => {
+        setTimeout(() => {
+            commandManager.resetFilteredAcceptedCommands()
+            commandManager.resetEntryKeys()
+            setFilteredAcceptedCommands(commandManager.getAcceptedCommands())
+            setEntryKeys('')
+            setCompletedCommand(null)
+        }, 100)
+    }
+
     return (
         <BasePage>
             <div>
@@ -56,8 +69,13 @@ export const HighScorePageComponent = ({ mode }: Props) => {
                 <SuggestCommand
                     filteredAcceptedCommands={filteredAcceptedCommands}
                     entryKeys={entryKeys}
+                    completedCommand={completedCommand}
+                    resetSuggest={handleResetSuggest}
                 />
-                <SkillList skills={mockSkillSets} />
+                <SkillList
+                    skills={mockSkillSets}
+                    completedCommand={completedCommand}
+                />
             </div>
         </BasePage>
     )

@@ -3,11 +3,15 @@ import { SuggestCommandItem } from '@/app/_components/high-score/SuggestCommandI
 type Props = {
     filteredAcceptedCommands: string[]
     entryKeys: string
+    completedCommand: string | null
+    resetSuggest: () => void
 }
 
 export const SuggestCommand = ({
     filteredAcceptedCommands,
     entryKeys,
+    completedCommand,
+    resetSuggest,
 }: Props) => {
     return (
         <div>
@@ -18,6 +22,8 @@ export const SuggestCommand = ({
                         key={command}
                         commandName={command}
                         entryKeys={entryKeys}
+                        isCompleted={command === completedCommand}
+                        resetSuggest={resetSuggest}
                     />
                 ))}
             </ul>

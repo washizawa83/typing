@@ -3,9 +3,16 @@ import { useEffect, useState } from 'react'
 type Props = {
     commandName: string
     entryKeys: string
+    isCompleted: boolean
+    resetSuggest: () => void
 }
 
-export const SuggestCommandItem = ({ commandName, entryKeys }: Props) => {
+export const SuggestCommandItem = ({
+    commandName,
+    entryKeys,
+    isCompleted,
+    resetSuggest,
+}: Props) => {
     const [enteredKeys, setEnteredKeys] = useState('')
     const [unEnteredKeys, setUnEnteredKeys] = useState('')
 
@@ -25,6 +32,10 @@ export const SuggestCommandItem = ({ commandName, entryKeys }: Props) => {
         const splitEntryKeyResult = splitEntryKeys()
         setEnteredKeys(splitEntryKeyResult[0])
         setUnEnteredKeys(splitEntryKeyResult[1])
+
+        if (isCompleted) {
+            resetSuggest()
+        }
     }, [entryKeys, commandName])
 
     return (

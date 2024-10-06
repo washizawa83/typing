@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 type Props = {
     skill: BaseSkill
+    invoke: boolean
 }
 
 enum ReCastPhase {
@@ -12,7 +13,7 @@ enum ReCastPhase {
     full,
 }
 
-export const SkillIcon = ({ skill }: Props) => {
+export const SkillIcon = ({ skill, invoke }: Props) => {
     const [isReCast, setIsReCast] = useState(false)
     const [reCastPhase, setReCastPhase] = useState<
         ReCastPhase.half | ReCastPhase.full
@@ -61,6 +62,12 @@ export const SkillIcon = ({ skill }: Props) => {
             reCastMotionSecond()
         }
     }, [isReCast, reCastPhase])
+
+    useEffect(() => {
+        if (invoke && !isReCast) {
+            setIsReCast(true)
+        }
+    }, [invoke])
 
     return (
         <div
@@ -179,7 +186,7 @@ export const SkillIcon = ({ skill }: Props) => {
                     </div>
                 )}
             </div>
-            <span className={`text-xs ${isReCast && 'text-stone-400'}`}>
+            <span className={`text-xs ${isReCast && 'text-stone-600'}`}>
                 {skill.name}
             </span>
         </div>

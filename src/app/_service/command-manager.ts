@@ -14,13 +14,21 @@ export class CommandManager {
         return this.entryKeys
     }
 
-    setEntryKeys(key: string) {
+    addEntryKeys(key: string) {
         if (key === ' ') key = '_'
         this.entryKeys = (this.entryKeys + key).toLowerCase()
     }
 
+    resetEntryKeys() {
+        this.entryKeys = ''
+    }
+
     getFilteredAcceptedCommand() {
         return this.filteredAcceptedCommands
+    }
+
+    getAcceptedCommands() {
+        return this.acceptedCommands
     }
 
     filterAcceptedCommands() {
@@ -38,6 +46,10 @@ export class CommandManager {
         }
         this.filteredAcceptedCommands = this.acceptedCommands
         return false
+    }
+
+    resetFilteredAcceptedCommands() {
+        this.filteredAcceptedCommands = this.acceptedCommands
     }
 
     searchAcceptedCommands() {
