@@ -1,5 +1,5 @@
 'use client'
-import { SkillIcon } from '@/app/_components/high-score/SkillIcon'
+import { SkillIcon } from '@/app/_components/high-score/skill/SkillIcon'
 import type { BaseSkill } from '@/app/_service/skill'
 
 type Props = {

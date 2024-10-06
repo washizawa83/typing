@@ -1,4 +1,4 @@
-import { SuggestCommandItem } from '@/app/_components/high-score/SuggestCommandItem'
+import { SuggestCommandItem } from '@/app/_components/high-score/suggest/SuggestCommandItem'
 
 type Props = {
     filteredAcceptedCommands: string[]

@@ -70,10 +70,7 @@ export const SkillIcon = ({ skill, invoke }: Props) => {
     }, [invoke])
 
     return (
-        <div
-            className="flex size-16 flex-col items-center"
-            onClick={() => setIsReCast(true)}
-        >
+        <div className="flex size-16 flex-col items-center">
             <div
                 className="relative overflow-hidden rounded-md"
                 style={{ width: '30px', height: '30px' }}
