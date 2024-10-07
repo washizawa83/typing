@@ -13,11 +13,22 @@ type Props = {
     mode: 'training' | 'performance'
 }
 
+export interface SkillStatus {
+    isAvailable: boolean
+}
+
 const mockSkillSets: BaseSkill[] = [
     new Heat(),
     new OverHeat(),
     new LimitOfHeat(),
 ]
+
+const createSkillMap = () => {
+    return mockSkillSets.reduce<Record<string, SkillStatus>>((acc, skill) => {
+        acc[skill.name] = { isAvailable: true }
+        return acc
+    }, {})
+}
 
 export const HighScorePageComponent = ({ mode }: Props) => {
     const [completedCommand, setCompletedCommand] = useState<string | null>(
@@ -27,6 +38,8 @@ export const HighScorePageComponent = ({ mode }: Props) => {
     const [filteredAcceptedCommands, setFilteredAcceptedCommands] = useState<
         string[]
     >(mockSkillSets.map((skill) => skill.name))
+    const [skillStates, setSkillStates] = useState(createSkillMap())
+
     const router = useRouter()
     const commandManager = new CommandManager(mockSkillSets)
 
@@ -71,10 +84,12 @@ export const HighScorePageComponent = ({ mode }: Props) => {
                     entryKeys={entryKeys}
                     completedCommand={completedCommand}
                     resetSuggest={handleResetSuggest}
+                    skillStates={skillStates}
                 />
                 <SkillList
                     skills={mockSkillSets}
                     completedCommand={completedCommand}
+                    setSkillStates={setSkillStates}
                 />
             </div>
         </BasePage>

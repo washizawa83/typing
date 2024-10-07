@@ -1,11 +1,15 @@
+import { SkillDescription } from '@/app/_components/high-score/skill/SkillDescription'
+import type { SkillStatus } from '@/app/_components/pages/HighScorePageComponent'
 import type { BaseSkill } from '@/app/_service/skill'
 import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
+import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 
 type Props = {
     skill: BaseSkill
     invoke: boolean
+    setSkillStates: Dispatch<SetStateAction<Record<string, SkillStatus>>>
 }
 
 enum ReCastPhase {
@@ -13,7 +17,8 @@ enum ReCastPhase {
     full,
 }
 
-export const SkillIcon = ({ skill, invoke }: Props) => {
+export const SkillIcon = ({ skill, invoke, setSkillStates }: Props) => {
+    const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const [isReCast, setIsReCast] = useState(false)
     const [reCastPhase, setReCastPhase] = useState<
         ReCastPhase.half | ReCastPhase.full
@@ -23,6 +28,13 @@ export const SkillIcon = ({ skill, invoke }: Props) => {
     const secondControls = useAnimation()
 
     const reCastMotionDuration = skill.reCastTimeForSeconds / 2
+
+    const updateSkillState = (isAvailable: boolean) => {
+        setSkillStates((prevSkillStates) => ({
+            ...prevSkillStates,
+            [skill.name]: { isAvailable },
+        }))
+    }
 
     const reCastMotionFist = async () => {
         await firstControls.start({
@@ -48,6 +60,7 @@ export const SkillIcon = ({ skill, invoke }: Props) => {
 
         setReCastPhase(ReCastPhase.half)
         setIsReCast(false)
+        updateSkillState(true)
     }
 
     useEffect(() => {
@@ -56,6 +69,7 @@ export const SkillIcon = ({ skill, invoke }: Props) => {
         if (reCastPhase === ReCastPhase.half) {
             reCastMotionFist()
             reCastMotionSecond()
+            updateSkillState(false)
         }
 
         if (reCastPhase === ReCastPhase.full) {
@@ -69,11 +83,21 @@ export const SkillIcon = ({ skill, invoke }: Props) => {
         }
     }, [invoke])
 
+    const handleCloseDescription = () => {
+        setIsDescriptionOpen(false)
+    }
+
     return (
-        <div className="flex size-16 flex-col items-center">
+        <div className="relative flex size-16 flex-col items-center">
+            <SkillDescription
+                description={skill.description}
+                isOpen={isDescriptionOpen}
+                close={handleCloseDescription}
+            />
             <div
                 className="relative overflow-hidden rounded-md"
                 style={{ width: '30px', height: '30px' }}
+                onClick={() => setIsDescriptionOpen(true)}
             >
                 <Image
                     key={skill.name}

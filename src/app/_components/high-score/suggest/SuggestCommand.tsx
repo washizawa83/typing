@@ -1,10 +1,12 @@
 import { SuggestCommandItem } from '@/app/_components/high-score/suggest/SuggestCommandItem'
+import type { SkillStatus } from '@/app/_components/pages/HighScorePageComponent'
 
 type Props = {
     filteredAcceptedCommands: string[]
     entryKeys: string
     completedCommand: string | null
     resetSuggest: () => void
+    skillStates: Record<string, SkillStatus>
 }
 
 export const SuggestCommand = ({
@@ -12,6 +14,7 @@ export const SuggestCommand = ({
     entryKeys,
     completedCommand,
     resetSuggest,
+    skillStates,
 }: Props) => {
     return (
         <div>
@@ -24,6 +27,7 @@ export const SuggestCommand = ({
                         entryKeys={entryKeys}
                         isCompleted={command === completedCommand}
                         resetSuggest={resetSuggest}
+                        skillStates={skillStates}
                     />
                 ))}
             </ul>
