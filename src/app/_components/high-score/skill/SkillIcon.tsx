@@ -10,6 +10,7 @@ type Props = {
     skill: BaseSkill
     invoke: boolean
     setSkillStates: Dispatch<SetStateAction<Record<string, SkillStatus>>>
+    setInvokeSkills: Dispatch<SetStateAction<BaseSkill[]>>
 }
 
 enum ReCastPhase {
@@ -17,7 +18,12 @@ enum ReCastPhase {
     full,
 }
 
-export const SkillIcon = ({ skill, invoke, setSkillStates }: Props) => {
+export const SkillIcon = ({
+    skill,
+    invoke,
+    setSkillStates,
+    setInvokeSkills,
+}: Props) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const [isReCast, setIsReCast] = useState(false)
     const [reCastPhase, setReCastPhase] = useState<
@@ -80,6 +86,7 @@ export const SkillIcon = ({ skill, invoke, setSkillStates }: Props) => {
     useEffect(() => {
         if (invoke && !isReCast) {
             setIsReCast(true)
+            setInvokeSkills((invokeSkills) => [...invokeSkills, skill])
         }
     }, [invoke])
 

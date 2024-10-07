@@ -1,5 +1,6 @@
 'use client'
 import { HighScoreHeader } from '@/app/_components/high-score/HighScoreHeader'
+import { MainHighScoreArea } from '@/app/_components/high-score/main-area/MainHighScoreArea'
 import { SkillList } from '@/app/_components/high-score/skill/SkillList'
 import { SuggestCommand } from '@/app/_components/high-score/suggest/SuggestCommand'
 import { BasePage } from '@/app/_components/layouts/BasePage'
@@ -39,6 +40,7 @@ export const HighScorePageComponent = ({ mode }: Props) => {
         string[]
     >(mockSkillSets.map((skill) => skill.name))
     const [skillStates, setSkillStates] = useState(createSkillMap())
+    const [invokeSkills, setInvokeSkills] = useState<BaseSkill[]>([])
 
     const router = useRouter()
     const commandManager = new CommandManager(mockSkillSets)
@@ -78,7 +80,10 @@ export const HighScorePageComponent = ({ mode }: Props) => {
         <BasePage>
             <div>
                 <HighScoreHeader mode={mode} />
-                <div className="h-72"></div>
+                <MainHighScoreArea
+                    invokeSkills={invokeSkills}
+                    setInvokeSkills={setInvokeSkills}
+                />
                 <SuggestCommand
                     filteredAcceptedCommands={filteredAcceptedCommands}
                     entryKeys={entryKeys}
@@ -90,6 +95,7 @@ export const HighScorePageComponent = ({ mode }: Props) => {
                     skills={mockSkillSets}
                     completedCommand={completedCommand}
                     setSkillStates={setSkillStates}
+                    setInvokeSkills={setInvokeSkills}
                 />
             </div>
         </BasePage>

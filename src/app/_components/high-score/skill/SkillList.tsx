@@ -8,12 +8,14 @@ type Props = {
     skills: BaseSkill[]
     completedCommand: string | null
     setSkillStates: Dispatch<SetStateAction<Record<string, SkillStatus>>>
+    setInvokeSkills: Dispatch<SetStateAction<BaseSkill[]>>
 }
 
 export const SkillList = ({
     skills,
     completedCommand,
     setSkillStates,
+    setInvokeSkills,
 }: Props) => {
     return (
         <div>
@@ -25,6 +27,7 @@ export const SkillList = ({
                         skill={skill}
                         invoke={skill.name === completedCommand}
                         setSkillStates={setSkillStates}
+                        setInvokeSkills={setInvokeSkills}
                     />
                 ))}
             </ul>
