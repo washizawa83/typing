@@ -20,6 +20,14 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+::-webkit-scrollbar {
+    background: #757272;
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgb(43, 42, 42);
+}
+
 @layer utilities {
     .text-balance {
         text-wrap: balance;
