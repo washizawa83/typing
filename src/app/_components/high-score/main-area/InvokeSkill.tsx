@@ -9,6 +9,8 @@ type Props = {
     setInvokeSkills: Dispatch<SetStateAction<BaseSkill[]>>
 }
 
+const skillIconSize = 36
+
 export const InvokeSkill = ({ skill, setInvokeSkills }: Props) => {
     const controls = useAnimation()
     const skillStackMotion = async () => {
@@ -32,7 +34,7 @@ export const InvokeSkill = ({ skill, setInvokeSkills }: Props) => {
     return (
         <motion.div
             key={skill.name}
-            className="mt-2 flex w-60 items-center rounded bg-[#2c2c2e] p-2"
+            className="mt-2 flex w-60 items-center rounded bg-lightGray p-2"
             initial={{ opacity: 1 }}
             animate={controls}
         >
@@ -41,8 +43,8 @@ export const InvokeSkill = ({ skill, setInvokeSkills }: Props) => {
                     key={skill.name}
                     src={skill.iconUrl}
                     alt="skill logo"
-                    width={36}
-                    height={36}
+                    width={skillIconSize}
+                    height={skillIconSize}
                 />
             </div>
             <div className="ml-2 text-sm">{skill.name}</div>

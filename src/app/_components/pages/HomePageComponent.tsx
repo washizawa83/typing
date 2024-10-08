@@ -8,7 +8,7 @@ import logoUrl from '../../../../public/typeranker.svg'
 
 export const HomePageComponent = () => {
     return (
-        <div className="-z-100 bg-[#2f2e35] bg-cover bg-center">
+        <div className="-z-100 bg-background bg-cover bg-center">
             <OrbEffect />
             <BasePage>
                 <div className="flex h-3/5 flex-col items-center justify-center">

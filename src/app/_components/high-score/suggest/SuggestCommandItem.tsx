@@ -43,7 +43,7 @@ export const SuggestCommandItem = ({
 
     return (
         <li className="w-1/4">
-            <span className="text-amber-600">{enteredKeys}</span>
+            <span className="text-stone-600">{enteredKeys}</span>
             <span
                 className={`${!skillStates[commandName]?.isAvailable && 'text-gray-700'}`}
             >

@@ -18,6 +18,13 @@ enum ReCastPhase {
     full,
 }
 
+const skillIconSize = 30
+const overSize = 8
+const reCastTimeMotionFullSize = skillIconSize + overSize
+const reCastTimeMotionHalfSize = reCastTimeMotionFullSize / 2
+const centerPosition = overSize / 2
+const skillMotionColor = '#8080807d'
+
 export const SkillIcon = ({
     skill,
     invoke,
@@ -103,25 +110,28 @@ export const SkillIcon = ({
             />
             <div
                 className="relative overflow-hidden rounded-md"
-                style={{ width: '30px', height: '30px' }}
+                style={{
+                    width: `${skillIconSize}px`,
+                    height: `${skillIconSize}px`,
+                }}
                 onClick={() => setIsDescriptionOpen(true)}
             >
                 <Image
                     key={skill.name}
                     src={skill.iconUrl}
                     alt="skill logo"
-                    width={30}
-                    height={30}
+                    width={skillIconSize}
+                    height={skillIconSize}
                 />
                 {isReCast && reCastPhase === ReCastPhase.half && (
                     <div>
                         <motion.div
                             className="absolute inset-0 bg-transparent"
                             style={{
-                                width: '38px',
-                                height: '38px',
-                                top: '-4px',
-                                left: '-4px',
+                                width: `${reCastTimeMotionFullSize}px`,
+                                height: `${reCastTimeMotionFullSize}px`,
+                                top: `-${centerPosition}px`,
+                                left: `-${centerPosition}px`,
                                 zIndex: 20,
                             }}
                             initial={{ rotate: 0 }}
@@ -129,10 +139,10 @@ export const SkillIcon = ({
                         >
                             <div
                                 style={{
-                                    width: '19px',
-                                    height: '38px',
-                                    borderRadius: '38px 0 0 38px',
-                                    background: `conic-gradient(#8080807d 0%, #8080807d 100%)`,
+                                    width: `${reCastTimeMotionHalfSize}px`,
+                                    height: `${reCastTimeMotionFullSize}px`,
+                                    borderRadius: `${reCastTimeMotionFullSize}px 0 0 ${reCastTimeMotionFullSize}px`,
+                                    background: `conic-gradient(${skillMotionColor} 0%, ${skillMotionColor} 100%)`,
                                     isolation: 'isolate',
                                 }}
                             ></div>
@@ -140,34 +150,37 @@ export const SkillIcon = ({
                         <span
                             className="absolute overflow-hidden"
                             style={{
-                                width: '19px',
-                                height: '38px',
-                                top: '-4px',
-                                right: '-4px',
+                                width: `${reCastTimeMotionHalfSize}px`,
+                                height: `${reCastTimeMotionFullSize}px`,
+                                top: `-${centerPosition}px`,
+                                right: `-${centerPosition}px`,
                                 zIndex: 15,
                             }}
                         >
                             <motion.div
                                 className="absolute inset-0 flex bg-transparent"
                                 style={{
-                                    width: '38px',
-                                    height: '38px',
-                                    left: '-19px',
+                                    width: `${reCastTimeMotionFullSize}px`,
+                                    height: `${reCastTimeMotionFullSize}px`,
+                                    left: `-${reCastTimeMotionHalfSize}px`,
                                     zIndex: 10,
                                 }}
                                 initial={{ rotate: 0 }}
                                 animate={secondControls}
                             >
                                 <div
-                                    style={{ width: '19px', height: '38px' }}
+                                    style={{
+                                        width: `${reCastTimeMotionHalfSize}px`,
+                                        height: `${reCastTimeMotionFullSize}px`,
+                                    }}
                                 ></div>
                                 <div
                                     style={{
                                         right: 0,
-                                        width: '19px',
-                                        height: '38px',
-                                        borderRadius: '0 38px 38px 0',
-                                        background: `conic-gradient(#8080807d 0%, #8080807d 100%)`,
+                                        width: `${reCastTimeMotionHalfSize}px`,
+                                        height: `${reCastTimeMotionFullSize}px`,
+                                        borderRadius: `0 ${reCastTimeMotionFullSize}px ${reCastTimeMotionFullSize}px 0`,
+                                        background: `conic-gradient(${skillMotionColor} 0%, ${skillMotionColor} 100%)`,
                                     }}
                                 ></div>
                             </motion.div>
@@ -179,34 +192,37 @@ export const SkillIcon = ({
                         <span
                             className="absolute overflow-hidden"
                             style={{
-                                width: '19px',
-                                height: '38px',
-                                top: '-4px',
-                                right: '-4px',
+                                width: `${reCastTimeMotionHalfSize}px`,
+                                height: `${reCastTimeMotionFullSize}px`,
+                                top: `-${centerPosition}px`,
+                                right: `-${centerPosition}px`,
                                 zIndex: 15,
                             }}
                         >
                             <motion.div
                                 className="absolute inset-0 flex bg-transparent"
                                 style={{
-                                    width: '38px',
-                                    height: '38px',
-                                    left: '-19px',
+                                    width: `${reCastTimeMotionFullSize}px`,
+                                    height: `${reCastTimeMotionFullSize}px`,
+                                    left: `-${reCastTimeMotionHalfSize}px`,
                                     zIndex: 10,
                                 }}
                                 initial={{ rotate: 0 }}
                                 animate={secondControls}
                             >
                                 <div
-                                    style={{ width: '19px', height: '38px' }}
+                                    style={{
+                                        width: `${reCastTimeMotionHalfSize}px`,
+                                        height: `${reCastTimeMotionFullSize}px`,
+                                    }}
                                 ></div>
                                 <div
                                     style={{
                                         right: 0,
-                                        width: '19px',
-                                        height: '38px',
-                                        borderRadius: '0 38px 38px 0',
-                                        background: `conic-gradient(#8080807d 0%, #8080807d 100%)`,
+                                        width: `${reCastTimeMotionHalfSize}px`,
+                                        height: `${reCastTimeMotionFullSize}px`,
+                                        borderRadius: `0 ${reCastTimeMotionFullSize}px ${reCastTimeMotionFullSize}px 0`,
+                                        background: `conic-gradient(${skillMotionColor} 0%, ${skillMotionColor} 100%)`,
                                     }}
                                 ></div>
                             </motion.div>

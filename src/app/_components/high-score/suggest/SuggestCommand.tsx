@@ -18,7 +18,7 @@ export const SuggestCommand = ({
 }: Props) => {
     return (
         <div>
-            <h3 className="mb-3 border-b border-[#671f92] pb-1">Suggest</h3>
+            <h3 className="mb-3 border-b border-richPurple pb-1">Suggest</h3>
             <ul className="flex max-h-20 min-h-20 max-w-7xl flex-wrap overflow-y-auto overflow-x-hidden">
                 {filteredAcceptedCommands.map((command) => (
                     <SuggestCommandItem

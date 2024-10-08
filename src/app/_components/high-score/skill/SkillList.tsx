@@ -19,7 +19,7 @@ export const SkillList = ({
 }: Props) => {
     return (
         <div>
-            <h3 className="mb-3 border-b border-[#671f92] pb-1">Skills</h3>
+            <h3 className="mb-3 border-b border-richPurple pb-1">Skills</h3>
             <ul>
                 {skills.map((skill) => (
                     <SkillIcon

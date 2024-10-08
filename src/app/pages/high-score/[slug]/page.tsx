@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 
 export const HighScorePage = ({ params }: Props) => {
     return (
-        <div className="bg-[#1e1f21]">
+        <div className="bg-background">
             <HighScorePageComponent mode={params.slug} />
         </div>
     )
