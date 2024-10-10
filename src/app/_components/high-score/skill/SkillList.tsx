@@ -1,14 +1,15 @@
 'use client'
 import { SkillIcon } from '@/app/_components/high-score/skill/SkillIcon'
 import type { SkillStatus } from '@/app/_components/pages/HighScorePageComponent'
-import type { BaseSkill } from '@/app/_service/skill'
+import type { AttackSkill, BaseSkill } from '@/app/_game-config/skills'
 import type { Dispatch, SetStateAction } from 'react'
 
 type Props = {
-    skills: BaseSkill[]
+    skills: AttackSkill[]
     completedCommand: string | null
     setSkillStates: Dispatch<SetStateAction<Record<string, SkillStatus>>>
     setInvokeSkills: Dispatch<SetStateAction<BaseSkill[]>>
+    setScore: Dispatch<SetStateAction<number>>
 }
 
 export const SkillList = ({
@@ -16,6 +17,7 @@ export const SkillList = ({
     completedCommand,
     setSkillStates,
     setInvokeSkills,
+    setScore,
 }: Props) => {
     return (
         <div>
@@ -28,6 +30,7 @@ export const SkillList = ({
                         invoke={skill.name === completedCommand}
                         setSkillStates={setSkillStates}
                         setInvokeSkills={setInvokeSkills}
+                        setScore={setScore}
                     />
                 ))}
             </ul>

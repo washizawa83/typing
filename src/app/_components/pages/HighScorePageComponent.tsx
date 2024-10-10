@@ -4,9 +4,9 @@ import { MainHighScoreArea } from '@/app/_components/high-score/main-area/MainHi
 import { SkillList } from '@/app/_components/high-score/skill/SkillList'
 import { SuggestCommand } from '@/app/_components/high-score/suggest/SuggestCommand'
 import { BasePage } from '@/app/_components/layouts/BasePage'
+import type { AttackSkill, BaseSkill } from '@/app/_game-config/skills'
+import { Heat, LimitOfHeat, OverHeat } from '@/app/_game-config/skills'
 import { CommandManager } from '@/app/_service/command-manager'
-import type { BaseSkill } from '@/app/_service/skill'
-import { Heat, LimitOfHeat, OverHeat } from '@/app/_service/skill'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -18,7 +18,7 @@ export interface SkillStatus {
     isAvailable: boolean
 }
 
-const mockSkillSets: BaseSkill[] = [
+const mockSkillSets: AttackSkill[] = [
     new Heat(),
     new OverHeat(),
     new LimitOfHeat(),
@@ -41,6 +41,7 @@ export const HighScorePageComponent = ({ mode }: Props) => {
     >(mockSkillSets.map((skill) => skill.name))
     const [skillStates, setSkillStates] = useState(createSkillMap())
     const [invokeSkills, setInvokeSkills] = useState<BaseSkill[]>([])
+    const [score, setScore] = useState(0)
 
     const router = useRouter()
     const commandManager = new CommandManager(mockSkillSets)
@@ -83,6 +84,8 @@ export const HighScorePageComponent = ({ mode }: Props) => {
                 <MainHighScoreArea
                     invokeSkills={invokeSkills}
                     setInvokeSkills={setInvokeSkills}
+                    mode={mode}
+                    score={score}
                 />
                 <SuggestCommand
                     filteredAcceptedCommands={filteredAcceptedCommands}
@@ -96,6 +99,7 @@ export const HighScorePageComponent = ({ mode }: Props) => {
                     completedCommand={completedCommand}
                     setSkillStates={setSkillStates}
                     setInvokeSkills={setInvokeSkills}
+                    setScore={setScore}
                 />
             </div>
         </BasePage>

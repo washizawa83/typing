@@ -1,16 +1,17 @@
 import { SkillDescription } from '@/app/_components/high-score/skill/SkillDescription'
 import type { SkillStatus } from '@/app/_components/pages/HighScorePageComponent'
-import type { BaseSkill } from '@/app/_service/skill'
+import type { AttackSkill, BaseSkill } from '@/app/_game-config/skills'
 import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
 import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 
 type Props = {
-    skill: BaseSkill
+    skill: AttackSkill
     invoke: boolean
     setSkillStates: Dispatch<SetStateAction<Record<string, SkillStatus>>>
     setInvokeSkills: Dispatch<SetStateAction<BaseSkill[]>>
+    setScore: Dispatch<SetStateAction<number>>
 }
 
 enum ReCastPhase {
@@ -30,6 +31,7 @@ export const SkillIcon = ({
     invoke,
     setSkillStates,
     setInvokeSkills,
+    setScore,
 }: Props) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const [isReCast, setIsReCast] = useState(false)
@@ -94,6 +96,7 @@ export const SkillIcon = ({
         if (invoke && !isReCast) {
             setIsReCast(true)
             setInvokeSkills((invokeSkills) => [...invokeSkills, skill])
+            setScore((score) => score + skill.magicalAttack)
         }
     }, [invoke])
 

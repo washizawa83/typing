@@ -13,6 +13,8 @@ const config: Config = {
                 foreground: 'var(--foreground)',
                 lightGray: '#2c2c2e',
                 richPurple: '#671f92',
+                lightBrown: '#c1a56d',
+                heat: '#cb3535',
             },
         },
     },

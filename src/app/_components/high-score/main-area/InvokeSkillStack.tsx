@@ -1,5 +1,5 @@
 import { InvokeSkill } from '@/app/_components/high-score/main-area/InvokeSkill'
-import type { BaseSkill } from '@/app/_service/skill'
+import type { BaseSkill } from '@/app/_game-config/skills'
 import type { Dispatch, SetStateAction } from 'react'
 
 type Props = {

@@ -1,4 +1,4 @@
-import type { BaseSkill } from '@/app/_service/skill'
+import type { BaseSkill } from '@/app/_game-config/skills'
 import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
 import type { Dispatch, SetStateAction } from 'react'

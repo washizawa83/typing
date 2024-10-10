@@ -1,4 +1,4 @@
-import type { BaseSkill } from '@/app/_service/skill'
+import type { BaseSkill } from '@/app/_game-config/skills'
 
 export class CommandManager {
     private entryKeys = ''

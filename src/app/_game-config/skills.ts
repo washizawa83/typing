@@ -5,7 +5,7 @@ export interface BaseSkill {
     readonly reCastTimeForSeconds: number
 }
 
-interface AttackSkill extends BaseSkill {
+export interface AttackSkill extends BaseSkill {
     readonly physicalAttack: number
     readonly magicalAttack: number
 }
