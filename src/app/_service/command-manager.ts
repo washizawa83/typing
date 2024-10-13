@@ -1,4 +1,4 @@
-import type { BaseSkill } from '@/app/_service/skill'
+import type { BaseSkill } from '@/app/_game-config/skills'
 
 export class CommandManager {
     private entryKeys = ''
@@ -6,7 +6,7 @@ export class CommandManager {
     private filteredAcceptedCommands
 
     constructor(private skills: BaseSkill[]) {
-        this.acceptedCommands = this.skills.map((skill) => skill.name)
+        this.acceptedCommands = this.skills.map((skill) => skill.suggestName)
         this.filteredAcceptedCommands = this.acceptedCommands
     }
 

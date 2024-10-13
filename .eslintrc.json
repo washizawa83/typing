@@ -36,6 +36,7 @@
                 "html": false
             }
         ],
-        "@next/next/no-img-element": "off"
+        "@next/next/no-img-element": "off",
+        "@typescript-eslint/no-empty-object-type": "warn"
     }
 }

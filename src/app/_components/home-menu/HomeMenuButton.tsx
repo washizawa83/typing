@@ -4,22 +4,23 @@ import { useState } from 'react'
 
 type Props = {
     label: string
+    path: string
 }
 
-export const HomeMenuButton = ({ label }: Props) => {
+export const HomeMenuButton = ({ label, path }: Props) => {
     const buttonHoverBgColor = '#4f4859'
     const [isHovered, setIsHovered] = useState(false)
     const router = useRouter()
 
     return (
         <motion.button
-            className="relative w-96 rounded-3xl text-xl tracking-[.15em] outline-none"
+            className="relative my-3 w-96 rounded-3xl text-xl tracking-[.15em] outline-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             onMouseEnter={() => setIsHovered(true)}
             onFocus={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onClick={() => router.push('/pages/high-score/training/')}
+            onClick={() => router.push(`/pages/high-score/${path}/`)}
             whileHover={{
                 backgroundColor: buttonHoverBgColor,
                 transition: { duration: 0.3 },

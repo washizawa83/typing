@@ -1,4 +1,4 @@
-import type { BaseSkill } from '@/app/_service/skill'
+import type { BaseSkill } from '@/app/_game-config/skills'
 import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
 import type { Dispatch, SetStateAction } from 'react'
@@ -17,7 +17,7 @@ export const InvokeSkill = ({ skill, setInvokeSkills }: Props) => {
         await controls.start({
             opacity: 0,
             transition: {
-                duration: 5,
+                duration: 10,
                 ease: 'backInOut',
             },
         })
@@ -33,21 +33,21 @@ export const InvokeSkill = ({ skill, setInvokeSkills }: Props) => {
 
     return (
         <motion.div
-            key={skill.name}
+            key={skill.id}
             className="mt-2 flex w-60 items-center rounded bg-lightGray p-2"
             initial={{ opacity: 1 }}
             animate={controls}
         >
             <div className="size-9 overflow-hidden rounded-md">
                 <Image
-                    key={skill.name}
+                    key={skill.id}
                     src={skill.iconUrl}
                     alt="skill logo"
                     width={skillIconSize}
                     height={skillIconSize}
                 />
             </div>
-            <div className="ml-2 text-sm">{skill.name}</div>
+            <div className="ml-2 text-sm">{skill.displayName}</div>
         </motion.div>
     )
 }

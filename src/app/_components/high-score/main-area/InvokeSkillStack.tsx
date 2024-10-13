@@ -1,21 +1,16 @@
 import { InvokeSkill } from '@/app/_components/high-score/main-area/InvokeSkill'
-import type { BaseSkill } from '@/app/_service/skill'
-import type { Dispatch, SetStateAction } from 'react'
+import { useGameContext } from '@/app/_providers/GameProvider'
 
-type Props = {
-    invokeSkills: BaseSkill[]
-    setInvokeSkills: Dispatch<SetStateAction<BaseSkill[]>>
-}
-
-export const InvokeSkillStack = ({ invokeSkills, setInvokeSkills }: Props) => {
+export const InvokeSkillStack = () => {
+    const { invokedSkillLogs, setInvokedSkillLogs } = useGameContext()
     return (
         <div className="absolute bottom-0 right-0 h-72 w-60">
             <div className="flex-end flex h-72 flex-col justify-end">
-                {invokeSkills.map((skill) => (
+                {invokedSkillLogs.map((skill) => (
                     <InvokeSkill
-                        key={skill.name}
+                        key={skill.id}
                         skill={skill}
-                        setInvokeSkills={setInvokeSkills}
+                        setInvokeSkills={setInvokedSkillLogs}
                     />
                 ))}
             </div>

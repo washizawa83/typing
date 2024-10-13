@@ -1,4 +1,4 @@
-import type { SkillStatus } from '@/app/_components/pages/HighScorePageComponent'
+import { useGameContext } from '@/app/_providers/GameProvider'
 import { useEffect, useState } from 'react'
 
 type Props = {
@@ -6,7 +6,10 @@ type Props = {
     entryKeys: string
     isCompleted: boolean
     resetSuggest: () => void
-    skillStates: Record<string, SkillStatus>
+}
+
+const toCamelCase = (value: string) => {
+    return value.toLowerCase().replace(/_([a-z])/g, (_, p1) => p1.toUpperCase())
 }
 
 export const SuggestCommandItem = ({
@@ -14,8 +17,8 @@ export const SuggestCommandItem = ({
     entryKeys,
     isCompleted,
     resetSuggest,
-    skillStates,
 }: Props) => {
+    const { skillStates } = useGameContext()
     const [enteredKeys, setEnteredKeys] = useState('')
     const [unEnteredKeys, setUnEnteredKeys] = useState('')
 
@@ -43,9 +46,9 @@ export const SuggestCommandItem = ({
 
     return (
         <li className="w-1/4">
-            <span className="text-stone-600">{enteredKeys}</span>
+            <span className="text-amber-500">{enteredKeys}</span>
             <span
-                className={`${!skillStates[commandName]?.isAvailable && 'text-gray-700'}`}
+                className={`${!skillStates[toCamelCase(commandName)]?.isAvailable && 'text-gray-700'}`}
             >
                 {unEnteredKeys}
             </span>

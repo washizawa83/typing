@@ -1,20 +1,21 @@
+import { Enemy } from '@/app/_components/high-score/main-area/enemy/Enemy'
+import { MainAreaHeader } from '@/app/_components/high-score/main-area/header/MainAreaHeader'
 import { InvokeSkillStack } from '@/app/_components/high-score/main-area/InvokeSkillStack'
-import type { BaseSkill } from '@/app/_service/skill'
-import type { Dispatch, SetStateAction } from 'react'
+import { JobState } from '@/app/_components/high-score/main-area/job-status/JobStateWrap'
+import { BlackMage } from '@/app/_game-config/jobs'
 
 type Props = {
-    invokeSkills: BaseSkill[]
-    setInvokeSkills: Dispatch<SetStateAction<BaseSkill[]>>
+    mode: 'training' | 'performance'
 }
 
-export const MainHighScoreArea = ({ invokeSkills, setInvokeSkills }: Props) => {
+export const MainHighScoreArea = ({ mode }: Props) => {
     return (
-        <div className="relative h-72 w-full">
+        <div className="relative h-80 w-full">
             <div className="absolute size-full">
-                <InvokeSkillStack
-                    invokeSkills={invokeSkills}
-                    setInvokeSkills={setInvokeSkills}
-                />
+                <MainAreaHeader mode={mode} />
+                <Enemy />
+                <JobState job={new BlackMage()} />
+                <InvokeSkillStack />
             </div>
         </div>
     )
