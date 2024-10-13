@@ -1,8 +1,8 @@
-import { BlackMage } from '@/app/_game-config/jobs'
-import { LimitOfHeat } from '@/app/_game-config/skills'
+import type { BlackMage } from '@/app/_game-config/jobs'
+import type { LimitOfHeat } from '@/app/_game-config/skills'
 import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import limitBreakIcon from '../../../../../../../public/limit-break.png'
 
 type Props = {
@@ -17,7 +17,7 @@ export const LimitBreakIcon = ({ job, onLimitBreakTimeOut }: Props) => {
     const [_, setLimitBreakTime] = useState(limitBreakTimeSeconds)
     const controls = useAnimation()
 
-    const flashing = async () => {
+    const flashing = useCallback(async () => {
         await controls.start({
             opacity: [1, 0, 1],
             transition: {
@@ -26,9 +26,9 @@ export const LimitBreakIcon = ({ job, onLimitBreakTimeOut }: Props) => {
                 ease: 'easeInOut',
             },
         })
-    }
+    }, [])
 
-    const always = async () => {
+    const always = useCallback(async () => {
         await controls.start({
             opacity: 1,
             transition: {
@@ -36,7 +36,7 @@ export const LimitBreakIcon = ({ job, onLimitBreakTimeOut }: Props) => {
                 ease: 'linear',
             },
         })
-    }
+    }, [])
 
     useEffect(() => {
         if (isUnMount) {

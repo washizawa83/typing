@@ -1,5 +1,6 @@
 import { BlackMageStateGauge } from '@/app/_components/high-score/main-area/job-status/black-mage/BlackMageStateGauge'
 import { LimitBreakIcon } from '@/app/_components/high-score/main-area/job-status/black-mage/LimitBreakIcon'
+import { StateIcon } from '@/app/_components/high-score/main-area/job-status/black-mage/StateIcon'
 import { BlackMage } from '@/app/_game-config/jobs'
 import { useGameContext } from '@/app/_providers/GameProvider'
 import { useEffect, useState } from 'react'
@@ -57,6 +58,7 @@ export const LevelGauge = ({
     return (
         <div>
             <div className="flex items-center">
+                <StateIcon type={type} />
                 <ul className="flex flex-wrap-reverse">
                     {[...Array(maxLevelByLimitBreak)].map((_, index) =>
                         index < maxLevel ? (

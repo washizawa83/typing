@@ -20,8 +20,9 @@ export const HomePageComponent = () => {
                         <Image src={logoUrl} alt="title logo" />
                     </motion.div>
                 </div>
-                <div className="flex items-center justify-center">
-                    <HomeMenuButton label="training" />
+                <div className="flex flex-col items-center justify-center">
+                    <HomeMenuButton label="training" path="training" />
+                    <HomeMenuButton label="performance" path="performance" />
                 </div>
             </BasePage>
         </div>

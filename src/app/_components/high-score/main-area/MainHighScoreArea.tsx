@@ -1,3 +1,4 @@
+import { Enemy } from '@/app/_components/high-score/main-area/enemy/Enemy'
 import { MainAreaHeader } from '@/app/_components/high-score/main-area/header/MainAreaHeader'
 import { InvokeSkillStack } from '@/app/_components/high-score/main-area/InvokeSkillStack'
 import { JobState } from '@/app/_components/high-score/main-area/job-status/JobStateWrap'
@@ -12,6 +13,7 @@ export const MainHighScoreArea = ({ mode }: Props) => {
         <div className="relative h-80 w-full">
             <div className="absolute size-full">
                 <MainAreaHeader mode={mode} />
+                <Enemy />
                 <JobState job={new BlackMage()} />
                 <InvokeSkillStack />
             </div>

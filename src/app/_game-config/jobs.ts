@@ -14,7 +14,7 @@ import type {
     JobStates,
     WhiteMageState,
 } from '@/app/_type/job/jobs'
-import { Dispatch, SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 export interface BaseJob {
     readonly name: string
@@ -43,7 +43,7 @@ export class BlackMage implements MageJob {
         ['limitOfCold', new LimitOfCold()],
     ])
     static readonly maxTypeLevel = 3
-    static readonly maxTypeLevelByLimitBreak = 8
+    static readonly maxTypeLevelByLimitBreak = 6
     readonly initialState: BlackMageState = {
         heat: {
             level: 0,
