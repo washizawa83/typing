@@ -16,21 +16,23 @@ export interface AttackSkill extends BaseSkill {
 
 export interface BlackMageHeatSkill extends AttackSkill {
     readonly type: 'heat'
+    readonly risingLevel: number
 }
 
 export interface BlackMageColdSkill extends AttackSkill {
     readonly type: 'cold'
+    readonly risingLevel: number
 }
 
 export class Heat implements BlackMageHeatSkill {
-    risingHeatLevel = 1
+    risingLevel = 1
     isLimitBreak = false
 
     type = 'heat' as const
     id = 'heat'
     suggestName = 'heat'
     displayName = 'heat'
-    description = `対象に熱ダメージを与える。自身の熱レベルが${this.risingHeatLevel}上昇する。`
+    description = `対象に熱ダメージを与える。自身の熱レベルが${this.risingLevel}上昇する。`
     iconUrl = '/skill-icons/heat.png'
     magicalAttack = 200
     physicalAttack = 0
@@ -38,14 +40,14 @@ export class Heat implements BlackMageHeatSkill {
 }
 
 export class OverHeat implements BlackMageHeatSkill {
-    risingHeatLevel = 2
+    risingLevel = 2
     isLimitBreak = false
 
     type = 'heat' as const
     id = 'overHeat'
     suggestName = 'over_heat'
     displayName = 'over heat'
-    description = `対象に熱ダメージを与える。自身の熱レベルが${this.risingHeatLevel}上昇する。`
+    description = `対象に熱ダメージを与える。自身の熱レベルが${this.risingLevel}上昇する。`
     iconUrl = '/skill-icons/over-heat.png'
     magicalAttack = 500
     physicalAttack = 0
@@ -53,7 +55,7 @@ export class OverHeat implements BlackMageHeatSkill {
 }
 
 export class LimitOfHeat implements BlackMageHeatSkill {
-    risingHeatLevel = 1
+    risingLevel = 1
     limitBreakTimeSeconds = 20
     isLimitBreak = true
 
@@ -61,7 +63,7 @@ export class LimitOfHeat implements BlackMageHeatSkill {
     id = 'limitOfHeat'
     suggestName = 'limit_of_heat'
     displayName = 'limit of heat'
-    description = `対象に熱ダメージを与える。自身の熱レベルが${this.risingHeatLevel}上昇する。さらに発動から${this.limitBreakTimeSeconds}秒間、熱レベルの限界値を超えることができる。`
+    description = `対象に熱ダメージを与える。自身の熱レベルが${this.risingLevel}上昇する。さらに発動から${this.limitBreakTimeSeconds}秒間、熱レベルの限界値を超えることができる。`
     iconUrl = '/skill-icons/limit-of-heat.png'
     magicalAttack = 800
     physicalAttack = 0
@@ -69,14 +71,14 @@ export class LimitOfHeat implements BlackMageHeatSkill {
 }
 
 export class Cold implements BlackMageColdSkill {
-    risingColdLevel = 1
+    risingLevel = 1
     isLimitBreak = false
 
     type = 'cold' as const
     id = 'cold'
     suggestName = 'cold'
     displayName = 'cold'
-    description = `対象に冷気ダメージを与える。自身の冷気レベルが${this.risingColdLevel}上昇する。`
+    description = `対象に冷気ダメージを与える。自身の冷気レベルが${this.risingLevel}上昇する。`
     iconUrl = '/skill-icons/cold.png'
     magicalAttack = 200
     physicalAttack = 0
@@ -84,14 +86,14 @@ export class Cold implements BlackMageColdSkill {
 }
 
 export class OverCold implements BlackMageColdSkill {
-    risingColdLevel = 2
+    risingLevel = 2
     isLimitBreak = false
 
     type = 'cold' as const
     id = 'overCold'
     suggestName = 'over_cold'
     displayName = 'over cold'
-    description = `対象に冷気ダメージを与える。自身の冷気レベルが${this.risingColdLevel}上昇する。`
+    description = `対象に冷気ダメージを与える。自身の冷気レベルが${this.risingLevel}上昇する。`
     iconUrl = '/skill-icons/over-cold.png'
     magicalAttack = 500
     physicalAttack = 0
@@ -99,7 +101,7 @@ export class OverCold implements BlackMageColdSkill {
 }
 
 export class LimitOfCold implements BlackMageColdSkill {
-    risingColdLevel = 1
+    risingLevel = 1
     limitBreakTimeSeconds = 20
     isLimitBreak = true
 
@@ -107,7 +109,7 @@ export class LimitOfCold implements BlackMageColdSkill {
     id = 'limitOfCold'
     suggestName = 'limit_of_cold'
     displayName = 'limit of cold'
-    description = `対象に冷気ダメージを与える。自身の冷気レベルが${this.risingColdLevel}上昇する。さらに発動から${this.limitBreakTimeSeconds}秒間、冷気レベルの限界値を超えることができる。`
+    description = `対象に冷気ダメージを与える。自身の冷気レベルが${this.risingLevel}上昇する。さらに発動から${this.limitBreakTimeSeconds}秒間、冷気レベルの限界値を超えることができる。`
     iconUrl = '/skill-icons/limit-of-cold.png'
     magicalAttack = 800
     physicalAttack = 0

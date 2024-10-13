@@ -19,12 +19,6 @@ export interface SkillStatus {
     isAvailable: boolean
 }
 
-// const mockSkillSets: AttackSkill[] = [
-//     new Heat(),
-//     new OverHeat(),
-//     new LimitOfHeat(),
-// ]
-
 export const HighScoreWrapComponent = ({ mode, job }: Props) => {
     const skills = Array.from(job.skills.values())
     const [entryKeys, setEntryKeys] = useState('')

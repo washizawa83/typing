@@ -11,13 +11,13 @@ export type JobStates = BlackMageState | WhiteMageState
 
 export type BlackMageState = {
     heat: {
-        heatLevel: number
-        heatLevelDuration: number
+        level: number
+        duration: number
         isLimitBreak: boolean
     }
     cold: {
-        coldLevel: number
-        coldLevelDuration: number
+        level: number
+        duration: number
         isLimitBreak: boolean
     }
 }

@@ -14,7 +14,7 @@ export const LimitBreakIcon = ({ job, onLimitBreakTimeOut }: Props) => {
     const limitBreakTimeSeconds = (job.skills.get('limitOfHeat') as LimitOfHeat)
         .limitBreakTimeSeconds
     const [isUnMount, setIsUnMount] = useState(false)
-    const [limitBreakTime, setLimitBreakTime] = useState(limitBreakTimeSeconds)
+    const [_, setLimitBreakTime] = useState(limitBreakTimeSeconds)
     const controls = useAnimation()
 
     const flashing = async () => {

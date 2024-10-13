@@ -8,7 +8,6 @@ import {
     OverHeat,
 } from '@/app/_game-config/skills'
 import type {
-    BlackMageHeatSkills,
     BlackMageSkillNames,
     BlackMageSkills,
     BlackMageState,
@@ -43,17 +42,17 @@ export class BlackMage implements MageJob {
         ['overCold', new OverCold()],
         ['limitOfCold', new LimitOfCold()],
     ])
-    static readonly maximumHeatLevel = 3
-    static readonly maximumHeatLevelByLimitBreak = 8
+    static readonly maxTypeLevel = 3
+    static readonly maxTypeLevelByLimitBreak = 8
     readonly initialState: BlackMageState = {
         heat: {
-            heatLevel: 0,
-            heatLevelDuration: 10,
+            level: 0,
+            duration: 10,
             isLimitBreak: false,
         },
         cold: {
-            coldLevel: 0,
-            coldLevelDuration: 10,
+            level: 0,
+            duration: 10,
             isLimitBreak: false,
         },
     }
@@ -62,23 +61,25 @@ export class BlackMage implements MageJob {
         return 'heat' in state || 'cold' in state
     }
 
-    updateHeatLevel(currentJobState: BlackMageState, skill: Heat) {
-        const addHeatLevel =
-            currentJobState.heat.heatLevel + skill.risingHeatLevel
-        const validatedHeatLevel =
-            addHeatLevel > BlackMage.maximumHeatLevelByLimitBreak
-                ? BlackMage.maximumHeatLevelByLimitBreak
+    updateTypeLevel(currentJobState: BlackMageState, skill: BlackMageSkills) {
+        const addLevel = currentJobState[skill.type].level + skill.risingLevel
+        const validatedLevel =
+            addLevel > BlackMage.maxTypeLevelByLimitBreak
+                ? BlackMage.maxTypeLevelByLimitBreak
                 : !this.updateIsLimitBreak(currentJobState, skill) &&
-                    addHeatLevel > BlackMage.maximumHeatLevel
-                  ? BlackMage.maximumHeatLevel
-                  : addHeatLevel
-        return validatedHeatLevel
+                    addLevel > BlackMage.maxTypeLevel
+                  ? BlackMage.maxTypeLevel
+                  : addLevel
+        return validatedLevel
     }
 
-    updateIsLimitBreak(currentJobState: BlackMageState, skill: Heat) {
+    updateIsLimitBreak(
+        currentJobState: BlackMageState,
+        skill: BlackMageSkills,
+    ) {
         return skill.isLimitBreak
             ? skill.isLimitBreak
-            : currentJobState.heat.isLimitBreak
+            : currentJobState[skill.type].isLimitBreak
     }
 
     setJobStateByInvoke(currentJobState: JobStates, skill: BlackMageSkills) {
@@ -88,15 +89,9 @@ export class BlackMage implements MageJob {
         return {
             ...currentJobState,
             [skill.type]: {
-                ...currentJobState.heat,
-                heatLevel: this.updateHeatLevel(
-                    currentJobState,
-                    skill as BlackMageHeatSkills,
-                ),
-                isLimitBreak: this.updateIsLimitBreak(
-                    currentJobState,
-                    skill as BlackMageHeatSkills,
-                ),
+                ...currentJobState[skill.type],
+                level: this.updateTypeLevel(currentJobState, skill),
+                isLimitBreak: this.updateIsLimitBreak(currentJobState, skill),
             },
         }
     }
@@ -110,44 +105,9 @@ export class BlackMage implements MageJob {
 
         switch (skill.type) {
             case 'heat':
-                setJobState((currentJobState) => {
-                    if (!BlackMage.isBlackMageState(currentJobState))
-                        return this.initialState
-
-                    return {
-                        ...currentJobState,
-                        heat: {
-                            ...currentJobState.heat,
-                            heatLevel: this.updateHeatLevel(
-                                currentJobState,
-                                skill as BlackMageHeatSkills,
-                            ),
-                            isLimitBreak: this.updateIsLimitBreak(
-                                currentJobState,
-                                skill as BlackMageHeatSkills,
-                            ),
-                        },
-                    }
-                })
             case 'cold':
                 setJobState((currentJobState) => {
-                    if (!BlackMage.isBlackMageState(currentJobState))
-                        return this.initialState
-
-                    return {
-                        ...currentJobState,
-                        heat: {
-                            ...currentJobState.heat,
-                            heatLevel: this.updateHeatLevel(
-                                currentJobState,
-                                skill as BlackMageHeatSkills,
-                            ),
-                            isLimitBreak: this.updateIsLimitBreak(
-                                currentJobState,
-                                skill as BlackMageHeatSkills,
-                            ),
-                        },
-                    }
+                    return this.setJobStateByInvoke(currentJobState, skill)
                 })
             default:
                 return this.initialState
@@ -155,19 +115,20 @@ export class BlackMage implements MageJob {
     }
 
     updateJobStateByDuration(
-        skillType: 'heat',
+        skillType: 'heat' | 'cold',
         setJobState: Dispatch<SetStateAction<JobStates>>,
     ) {
         switch (skillType) {
             case 'heat':
+            case 'cold':
                 setJobState((currentJobState) => {
                     if (!BlackMage.isBlackMageState(currentJobState))
                         return currentJobState
                     return {
                         ...currentJobState,
-                        heat: {
-                            ...currentJobState.heat,
-                            heatLevel: currentJobState.heat.heatLevel - 1,
+                        [skillType]: {
+                            ...currentJobState[skillType],
+                            level: currentJobState[skillType].level - 1,
                         },
                     }
                 })

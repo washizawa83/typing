@@ -15,6 +15,7 @@ const config: Config = {
                 richPurple: '#671f92',
                 lightBrown: '#c1a56d',
                 heat: '#cb3535',
+                cold: '#359bcb',
             },
         },
     },
