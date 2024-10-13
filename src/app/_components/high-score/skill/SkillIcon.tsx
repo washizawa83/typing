@@ -1,17 +1,13 @@
 import { SkillDescription } from '@/app/_components/high-score/skill/SkillDescription'
-import type { SkillStatus } from '@/app/_components/pages/HighScorePageComponent'
-import type { AttackSkill, BaseSkill } from '@/app/_game-config/skills'
+import type { AttackSkill } from '@/app/_game-config/skills'
+import { useGameContext } from '@/app/_providers/GameProvider'
 import { motion, useAnimation } from 'framer-motion'
 import Image from 'next/image'
-import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 
 type Props = {
     skill: AttackSkill
     invoke: boolean
-    setSkillStates: Dispatch<SetStateAction<Record<string, SkillStatus>>>
-    setInvokeSkills: Dispatch<SetStateAction<BaseSkill[]>>
-    setScore: Dispatch<SetStateAction<number>>
 }
 
 enum ReCastPhase {
@@ -24,15 +20,10 @@ const overSize = 8
 const reCastTimeMotionFullSize = skillIconSize + overSize
 const reCastTimeMotionHalfSize = reCastTimeMotionFullSize / 2
 const centerPosition = overSize / 2
-const skillMotionColor = '#8080807d'
+const skillMotionColor = '#242323de'
 
-export const SkillIcon = ({
-    skill,
-    invoke,
-    setSkillStates,
-    setInvokeSkills,
-    setScore,
-}: Props) => {
+export const SkillIcon = ({ skill, invoke }: Props) => {
+    const { invokeSkill, updateSkillStateIsAvailable } = useGameContext()
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const [isReCast, setIsReCast] = useState(false)
     const [reCastPhase, setReCastPhase] = useState<
@@ -43,13 +34,6 @@ export const SkillIcon = ({
     const secondControls = useAnimation()
 
     const reCastMotionDuration = skill.reCastTimeForSeconds / 2
-
-    const updateSkillState = (isAvailable: boolean) => {
-        setSkillStates((prevSkillStates) => ({
-            ...prevSkillStates,
-            [skill.name]: { isAvailable },
-        }))
-    }
 
     const reCastMotionFist = async () => {
         await firstControls.start({
@@ -75,7 +59,7 @@ export const SkillIcon = ({
 
         setReCastPhase(ReCastPhase.half)
         setIsReCast(false)
-        updateSkillState(true)
+        updateSkillStateIsAvailable(skill.id, true)
     }
 
     useEffect(() => {
@@ -84,7 +68,6 @@ export const SkillIcon = ({
         if (reCastPhase === ReCastPhase.half) {
             reCastMotionFist()
             reCastMotionSecond()
-            updateSkillState(false)
         }
 
         if (reCastPhase === ReCastPhase.full) {
@@ -95,8 +78,7 @@ export const SkillIcon = ({
     useEffect(() => {
         if (invoke && !isReCast) {
             setIsReCast(true)
-            setInvokeSkills((invokeSkills) => [...invokeSkills, skill])
-            setScore((score) => score + skill.magicalAttack)
+            invokeSkill(skill)
         }
     }, [invoke])
 
@@ -120,7 +102,7 @@ export const SkillIcon = ({
                 onClick={() => setIsDescriptionOpen(true)}
             >
                 <Image
-                    key={skill.name}
+                    key={skill.id}
                     src={skill.iconUrl}
                     alt="skill logo"
                     width={skillIconSize}
@@ -233,8 +215,10 @@ export const SkillIcon = ({
                     </div>
                 )}
             </div>
-            <span className={`text-xs ${isReCast && 'text-stone-600'}`}>
-                {skill.name}
+            <span
+                className={`text-xs ${isReCast && 'text-stone-600'} whitespace-nowrap`}
+            >
+                {skill.displayName}
             </span>
         </div>
     )

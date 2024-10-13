@@ -6,7 +6,7 @@ export class CommandManager {
     private filteredAcceptedCommands
 
     constructor(private skills: BaseSkill[]) {
-        this.acceptedCommands = this.skills.map((skill) => skill.name)
+        this.acceptedCommands = this.skills.map((skill) => skill.suggestName)
         this.filteredAcceptedCommands = this.acceptedCommands
     }
 

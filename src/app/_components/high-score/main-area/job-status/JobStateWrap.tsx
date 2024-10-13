@@ -1,9 +1,9 @@
 import { BaseJobState } from '@/app/_components/high-score/main-area/job-status/BaseJoobState'
-import { BlackMageJobState } from '@/app/_components/high-score/main-area/job-status/BlackMageState'
-import type { BackMage } from '@/app/_game-config/jobs'
+import { BlackMageJobState } from '@/app/_components/high-score/main-area/job-status/black-mage/BlackMageState'
+import type { BlackMage } from '@/app/_game-config/jobs'
 
 type Props = {
-    job: BackMage
+    job: BlackMage
 }
 
 export const JobState = ({ job }: Props) => {
@@ -11,13 +11,13 @@ export const JobState = ({ job }: Props) => {
         case 'blackMage':
             return (
                 <BaseJobState>
-                    <BlackMageJobState jobState={job.state} />
+                    <BlackMageJobState job={job} />
                 </BaseJobState>
             )
         default:
             return (
                 <BaseJobState>
-                    <BlackMageJobState jobState={job.state} />
+                    <BlackMageJobState job={job} />
                 </BaseJobState>
             )
     }
