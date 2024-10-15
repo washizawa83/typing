@@ -5,9 +5,11 @@ import { useEffect } from 'react'
 export const OrbEffect = () => {
     useEffect(() => {
         // @ts-ignore
-        window.particlesJS.load('particles-js', '/particles.json', function () {
-            console.log('particles.js loaded - callback')
-        })
+        window.particlesJS.load(
+            'particles-js',
+            '/particles.json',
+            function () {},
+        )
     }, [])
 
     return (
