@@ -1,3 +1,5 @@
+import { highScoreTimeLimit } from '@/app/_game-config/game'
+import { useGameContext } from '@/app/_providers/GameProvider'
 import { motion, useAnimation } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { IconContext } from 'react-icons'
@@ -8,8 +10,9 @@ type Props = {
 }
 
 export const Timer = ({ mode }: Props) => {
-    const [seconds, setSeconds] = useState(180)
+    const [seconds, setSeconds] = useState(highScoreTimeLimit)
     const [isActive, setIsActive] = useState(true)
+    const { setIsTimeOver } = useGameContext()
 
     const controls = useAnimation()
 
@@ -27,7 +30,10 @@ export const Timer = ({ mode }: Props) => {
         if (mode === 'training') return
         timeLimitAnimate()
         const interval = setInterval(() => {
-            if (seconds === 0) return clearInterval(interval)
+            if (seconds === 0) {
+                setIsTimeOver(true)
+                return clearInterval(interval)
+            }
             setSeconds((prevSeconds) => prevSeconds - 1)
         }, 1000)
         return () => clearInterval(interval)
