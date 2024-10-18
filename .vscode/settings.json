@@ -15,5 +15,5 @@
         "typescript",
         "typescriptreact"
     ],
-    "cSpell.words": ["animejs", "supabase"]
+    "cSpell.words": ["animejs", "hookform", "supabase"]
 }

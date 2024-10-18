@@ -3,7 +3,6 @@ import { HomeMenuButton } from '@/app/_components/home-menu/HomeMenuButton'
 import { BasePage } from '@/app/_components/layouts/BasePage'
 import { OrbEffect } from '@/app/_components/layouts/OrbEffect'
 import { getUser } from '@/app/_service/database-service'
-import { createClient } from '@/app/_utils/supabase/client'
 import type { User } from '@supabase/supabase-js'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -14,12 +13,7 @@ import logoUrl from '../../../../public/typeranker.svg'
 
 export const HomePageComponent = () => {
     const [user, setUser] = useState<User | null>(null)
-    const supabase = createClient()
     const router = useRouter()
-
-    const signOut = async () => {
-        await supabase.auth.signOut()
-    }
 
     useEffect(() => {
         getUser().then(({ data, error }) => {
@@ -41,7 +35,7 @@ export const HomePageComponent = () => {
                                 width={32}
                                 height={32}
                                 alt="user avatar"
-                                onClick={() => signOut()}
+                                onClick={() => router.push('/pages/user/')}
                             />
                         </div>
                     ) : (
