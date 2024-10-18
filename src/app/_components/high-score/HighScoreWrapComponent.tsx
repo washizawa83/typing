@@ -4,8 +4,9 @@ import { MainHighScoreArea } from '@/app/_components/high-score/main-area/MainHi
 import { SkillList } from '@/app/_components/high-score/skill/SkillList'
 import { SuggestCommand } from '@/app/_components/high-score/suggest/SuggestCommand'
 import { BasePage } from '@/app/_components/layouts/BasePage'
-import { BaseJob } from '@/app/_game-config/jobs'
-import { AttackSkill } from '@/app/_game-config/skills'
+import type { BaseJob } from '@/app/_game-config/jobs'
+import type { AttackSkill } from '@/app/_game-config/skills'
+import { useGameContext } from '@/app/_providers/GameProvider'
 import { CommandManager } from '@/app/_service/command-manager'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -28,18 +29,21 @@ export const HighScoreWrapComponent = ({ mode, job }: Props) => {
     const [filteredAcceptedCommands, setFilteredAcceptedCommands] = useState<
         string[]
     >(skills.map((skill) => skill.suggestName))
+    const { incrementTypeCount, isTimeOver } = useGameContext()
 
     const router = useRouter()
     const commandManager = new CommandManager(skills)
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            if (isTimeOver) return
             if (event.shiftKey && event.location === 1) return
             if (event.key === 'Escape') return router.push('/pages/home/')
 
             commandManager.addEntryKeys(event.key)
             setFilteredAcceptedCommands(commandManager.searchAcceptedCommands())
             setEntryKeys(commandManager.getEntryKeys())
+            incrementTypeCount()
 
             if (commandManager.getCompletedCommand()) {
                 setCompletedCommand(commandManager.getCompletedCommand())
@@ -51,7 +55,7 @@ export const HighScoreWrapComponent = ({ mode, job }: Props) => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
         }
-    }, [])
+    }, [isTimeOver])
 
     const handleResetSuggest = () => {
         setTimeout(() => {

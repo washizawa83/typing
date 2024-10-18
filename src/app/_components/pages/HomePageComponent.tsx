@@ -2,6 +2,7 @@
 import { HomeMenuButton } from '@/app/_components/home-menu/HomeMenuButton'
 import { BasePage } from '@/app/_components/layouts/BasePage'
 import { OrbEffect } from '@/app/_components/layouts/OrbEffect'
+import { getUser } from '@/app/_service/database-service'
 import { createClient } from '@/app/_utils/supabase/client'
 import type { User } from '@supabase/supabase-js'
 import { motion } from 'framer-motion'
@@ -16,20 +17,16 @@ export const HomePageComponent = () => {
     const supabase = createClient()
     const router = useRouter()
 
-    const getUser = async () => {
-        const { data, error } = await supabase.auth.getUser()
-        console.log(data.user)
-        if (data.user) {
-            setUser(data.user)
-        }
-    }
-
     const signOut = async () => {
         await supabase.auth.signOut()
     }
 
     useEffect(() => {
-        getUser()
+        getUser().then(({ data, error }) => {
+            if (data.user) {
+                setUser(data.user)
+            }
+        })
     }, [])
 
     return (
