@@ -2,10 +2,9 @@ import { InvokeSkillList } from '@/app/_components/high-score/modals/InvokeSkill
 import { ResultDetailCard } from '@/app/_components/high-score/modals/ResultDetailCard'
 import { highScoreTimeLimit } from '@/app/_game-config/game'
 import { useGameContext } from '@/app/_providers/GameProvider'
-import { getUser } from '@/app/_service/database-service'
+import { getPlayer, getUser } from '@/app/_service/database-service'
 import { getSkillCommandLength } from '@/app/_utils/game/gam-util'
 import { createClient } from '@/app/_utils/supabase/client'
-import type { User } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { IconContext } from 'react-icons'
@@ -19,6 +18,13 @@ type resultViewModel = {
     previousHighScore?: number
     previousRankingScore?: number
     currentRankingScore?: number
+}
+
+type Player = {
+    id: string
+    name: string
+    user_id: string
+    created_at: string
 }
 
 type HighScore = {
@@ -38,7 +44,7 @@ export const ResultModal = () => {
         dps: 0,
         commandHitRate: 0,
     })
-    const [user, setUser] = useState<User | null>(null)
+    const [player, setPlayer] = useState<Player | null>(null)
     const [previousHighScore, setPreviousHighScore] =
         useState<HighScore | null>(null)
 
@@ -62,11 +68,11 @@ export const ResultModal = () => {
         return data
     }
 
-    const getRegisteredRankingScore = async (user: User) => {
+    const getRegisteredRankingScore = async (userId: string) => {
         const { data, error } = await supabase
             .from('high_scores')
             .select('*')
-            .eq('user_id', user.id)
+            .eq('user_id', userId)
             .limit(1)
 
         if (error) {
@@ -84,12 +90,15 @@ export const ResultModal = () => {
             commandHitRate: calcCommandHitRate() || 0,
         }
         const user = (await getUser()).data.user
-        setUser(user)
         if (!user) {
             return setResultViewModel(baseResultViewModel)
         }
 
-        const previousHighScore = await getRegisteredRankingScore(user)
+        const fetchedPlayer = (await getPlayer(user.id)).data?.[0]
+        setPlayer(fetchedPlayer ?? null)
+        const previousHighScore = await getRegisteredRankingScore(
+            fetchedPlayer!.user_id,
+        )
         setPreviousHighScore(previousHighScore)
         const currentRankingScore = await getRankForScore(score)
         const previousRankingScore = await getRankForScore(
@@ -105,11 +114,11 @@ export const ResultModal = () => {
     }
 
     const setRanking = async () => {
-        if (!user || !previousHighScore) return
+        if (!player || !previousHighScore) return
         await supabase.from('high_scores').upsert({
             id: previousHighScore.id,
-            user_id: user.id,
-            user_name: 'テストユーザー',
+            user_id: player.user_id,
+            user_name: player.name,
             score,
             job_id: 'f019c525-645c-47df-87db-bd22a985fd37',
         })
@@ -166,7 +175,7 @@ export const ResultModal = () => {
                                     {resultViewModel.previousHighScore ?? '-'}
                                 </span>
                             </div>
-                            {user ? (
+                            {player ? (
                                 <button
                                     className="flex w-52 items-center justify-center rounded border border-lightBrown p-2"
                                     onClick={() => setRanking()}
